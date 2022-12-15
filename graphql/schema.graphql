@@ -1,0 +1,32 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type Order @key(fields: "id") {
+  id: ID
+  uuid: ID
+  userUuid: ID
+  phone: String
+  orderEdited: Boolean
+  deliveryUuid: ID
+  buyerComment: String
+  filialUuid: ID
+  paymentUuid: ID
+  status: String
+  positions: String
+  moreInfo: String
+  cart: Cart
+}
+
+type Cart @key(fields: "id") @extends{ id: ID! @external } 
+
+type Query {
+  order(id: ID! @eq): Order @find
+  orders: [Order!]! @all
+  hello: String!
+  resolver: String!
+  greet(name: String!): String
+}
+
+type Mutation {
+  createOrder(userUuid: String!): Order! @create
+}
